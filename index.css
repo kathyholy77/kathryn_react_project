@@ -1,0 +1,378 @@
+:root {
+  --background-color: #1a1a1a;
+  --surface-color: #2c2c2c;
+  --primary-color: #6a5acd;
+  --primary-hover-color: #7d6de0;
+  --text-color: #f0f0f0;
+  --text-secondary-color: #a0a0a0;
+  --border-color: #444;
+  --danger-color: #e57373;
+  --danger-hover-color: #ef5350;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --overlay-color: rgba(0, 0, 0, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  overscroll-behavior-y: contain;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+}
+
+.main-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Navbar styles */
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: var(--text-secondary-color);
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.5rem 0.25rem;
+  position: relative;
+  transition: color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  color: var(--text-color);
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; /* Adjust if the underline is not in the right place */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-color);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-item.active {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.nav-item.active::after {
+  transform: scaleX(1);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.create-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.create-btn:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.create-btn:active {
+    transform: scale(0.98);
+}
+
+.category-header {
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+}
+
+.category-header svg {
+  width: 60px;
+  height: 60px;
+  color: var(--primary-color);
+}
+
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.item-card {
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px var(--shadow-color);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  position: relative;
+  border: 1px solid var(--border-color);
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px var(--shadow-color);
+}
+
+.card-thumbnail {
+  height: 150px;
+  background: linear-gradient(135deg, #6a5acd, #a39bde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-content h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.card-content p {
+  color: var(--text-secondary-color);
+  font-size: 0.9rem;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+
+.item-card:hover .delete-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.delete-btn:hover {
+  background-color: var(--danger-hover-color);
+}
+
+.empty-state,
+.placeholder-content {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  border: 2px dashed var(--border-color);
+}
+
+.empty-state h2,
+.placeholder-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p,
+.placeholder-content p {
+  color: var(--text-secondary-color);
+  margin-bottom: 1.5rem;
+}
+
+.placeholder-content p {
+    margin-bottom: 0;
+}
+
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--overlay-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background-color: var(--surface-color);
+  padding: 2.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px var(--shadow-color);
+  animation: slideIn 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.modal-content h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-secondary-color);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modal-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.modal-btn.cancel {
+  background-color: #555;
+  color: var(--text-color);
+}
+.modal-btn.cancel:hover {
+  background-color: #666;
+}
+
+.modal-btn.submit {
+  background-color: var(--primary-color);
+  color: white;
+}
+.modal-btn.submit:hover {
+  background-color: var(--primary-hover-color);
+}
+.modal-btn:active {
+    transform: scale(0.98);
+}
+
+.footer {
+  width: 100%;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-secondary-color);
+  font-size: 0.9rem;
+}
+
+.footer p {
+    margin-bottom: 0.5rem;
+}
+
+.footer p:last-child {
+    margin-bottom: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
